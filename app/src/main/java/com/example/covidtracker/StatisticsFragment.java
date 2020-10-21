@@ -30,6 +30,8 @@ public class StatisticsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        // Gather data from API
         textViewResult = getView().findViewById(R.id.text_view_result);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -56,7 +58,8 @@ public class StatisticsFragment extends Fragment {
                     content += "State: " + cases.getState() + "\n";
                     content += "Positive: " + cases.getPositive() + "\n";
                     content += "Positive Increase: " + cases.getPositiveIncrease() + "\n";
-                    content += "Probable: " + cases.getProbableCases() + "\n\n";
+                    content += "Probable: " + cases.getProbableCases() + "\n";
+                    content += "Confirmed Deaths: " + cases.getDeathConfirmed() + "\n\n";
 
                     textViewResult.append(content);
                 }
