@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_help"
+    app:startDestination="@id/helpFragment">
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.covidtracker.HelpFragment"
+        android:label="HelpFragment" >
+        <action
+            android:id="@+id/action_helpFragment_to_helpProtect"
+            app:destination="@id/helpProtect" />
+    </fragment>
+    <activity
+        android:id="@+id/helpProtect"
+        android:name="com.example.covidtracker.HelpProtect"
+        android:label="activity_help_protect"
+        tools:layout="@layout/activity_help_protect" />
+</navigation>

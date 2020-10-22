@@ -13,6 +13,6 @@
 
     <item
         android:id="@+id/nav_help"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/ic_baseline_help_24"
         android:title="Help" />
 </menu>
