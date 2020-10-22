@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_statistics:
                     selectedFragment = new StatisticsFragment();
                     break;
-                case R.id.nav_settings:
-                    selectedFragment = new SettingsFragment();
+                case R.id.nav_help:
+                    selectedFragment = new HelpFragment();
                     break;
             }
 
