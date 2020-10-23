@@ -23,7 +23,7 @@ public class HelpFragment extends Fragment {
     ListView listView;
 
     // Help Menu
-    String items[] = new String[] { "What can I do to protect myself?" , "Test" };
+    String items[] = new String[] { "What can I do to protect myself?"};
 
     @Nullable
     @Override

@@ -33,7 +33,7 @@ public class HelpProtect extends AppCompatActivity {
         textViewResult = findViewById(R.id.textView2);
 
         SpannableString string = new SpannableString(
-                "What can you do?\nStay at least 6 feet away from others\nWear a mask\nWash your hands frequently\nStay at home"
+                "What can you do?\n-Stay at least 6 feet away from others\n-Wear a mask\n-Wash your hands frequently\n-Stay at home"
         );
 
         string.setSpan(new BulletSpan(40, 0), 17, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
