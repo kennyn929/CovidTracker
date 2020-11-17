@@ -7,6 +7,11 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="Map" />
+
+    <item
         android:id="@+id/nav_statistics"
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:title="Stats" />
