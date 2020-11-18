@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.RestrictionsManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Debug;
 import android.text.Layout;
@@ -94,15 +95,27 @@ public class MapFragment extends Fragment
         //mGoogleMap.setOnMyLocationButtonClickListener(this);
         //mGoogleMap.setOnMyLocationClickListener(this);
 
-        if (locationPermissionsGranted) {
-            getDeviceLocation();
+        // Check to make sure location is enabled
+        LocationManager lm = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
 
-            //Permission check???
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        if (gps_enabled) {
+            if (locationPermissionsGranted) {
+
+                // Show user's location on map
+                getDeviceLocation();
+
+                //Permission check???
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
+
             }
-            googleMap.setMyLocationEnabled(true);
-
         }
     }
 
