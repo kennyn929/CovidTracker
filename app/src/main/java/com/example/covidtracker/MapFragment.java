@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MapFragment extends Fragment
         implements
@@ -78,7 +79,7 @@ public class MapFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(getContext(), "Map is ready", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Map is ready", Toast.LENGTH_SHORT).show();
 
         MapsInitializer.initialize(getContext());
 
@@ -101,7 +102,9 @@ public class MapFragment extends Fragment
 
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
+        } catch(Exception ex) {
+
+        }
 
         if (gps_enabled) {
             if (locationPermissionsGranted) {
@@ -116,6 +119,8 @@ public class MapFragment extends Fragment
                 googleMap.setMyLocationEnabled(true);
 
             }
+        } else {
+            Toast.makeText(getContext(), "Enable your location to make full use of this feature.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -148,13 +153,13 @@ public class MapFragment extends Fragment
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             Log.e(TAG, "onComplete: found location!");
-                            Toast.makeText(getContext(), "location found.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "location found.", Toast.LENGTH_SHORT).show();
                             Location currentLocation = (Location) task.getResult();
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                         } else {
                             Log.e(TAG, "onComplete: location is null.");
-                            Toast.makeText(getContext(), "unable to get location", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "unable to get location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
