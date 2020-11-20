@@ -1,15 +1,21 @@
 package com.example.covidtracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,6 +27,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StatisticsFragment extends Fragment {
 
     private TextView textViewResult;
+
+    ArrayList<String> stateNames = new ArrayList<String>();
+    List<Case> caseSet;
+
 
     @Nullable
     @Override
@@ -52,9 +62,15 @@ public class StatisticsFragment extends Fragment {
                     return;
                 }
 
-                List<Case> caseSet = response.body();
+                caseSet = response.body();
                 for (Case cases : caseSet) {
+
+                    //stateNames.add("" + cases.getState());
+
                     String content = "";
+
+                    //content += cases.getState() + "\n";
+
                     content += "State: " + cases.getState() + "\n";
                     content += "Positive: " + cases.getPositive() + "\n";
                     content += "Positive Increase: " + cases.getPositiveIncrease() + "\n";
@@ -62,6 +78,8 @@ public class StatisticsFragment extends Fragment {
                     content += "Confirmed Deaths: " + cases.getDeathConfirmed() + "\n\n";
 
                     textViewResult.append(content);
+
+
                 }
 
             }
@@ -71,5 +89,40 @@ public class StatisticsFragment extends Fragment {
                 textViewResult.setText(t.getMessage());
             }
         });
+
+
+        //Spinner spinner = (Spinner) view.findViewById(R.id.state_spinner);
+
+        /*
+        if (stateNames.size() < 1) {
+
+            Toast.makeText(getContext(), "" + stateNames.size(), Toast.LENGTH_SHORT).show();
+        } */
+
+        /*
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, stateNames);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // put code which recognize a selected element
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+         */
+
+
     }
+
+
 }
