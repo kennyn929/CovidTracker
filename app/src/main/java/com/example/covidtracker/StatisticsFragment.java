@@ -1,5 +1,6 @@
 package com.example.covidtracker;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +33,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment extends Fragment{
 
     private TextView textViewResult;
 
     ArrayList<String> stateNames = new ArrayList<String>();
     List<Case> caseSet;
+
+
 
 
     @Nullable
@@ -42,7 +53,7 @@ public class StatisticsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         // Gather data from API
-        textViewResult = getView().findViewById(R.id.text_view_result);
+        textViewResult = view.findViewById(R.id.text_view_result);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.covidtracking.com/")
@@ -63,13 +74,53 @@ public class StatisticsFragment extends Fragment {
                 }
 
                 caseSet = response.body();
+
+
+
+                ArrayList<String> stateNames = new ArrayList<>();
+                for (Case cases : caseSet) {
+                    stateNames.add(cases.getState());
+                }
+
+                Spinner spinner = (Spinner) getView().findViewById(R.id.state_spinner);
+                // Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, stateNames);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // Apply the adapter to the spinner
+                spinner.setAdapter(adapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view,
+                                               int position, long id) {
+                        String item = adapterView.getItemAtPosition(position).toString();
+                        if (item != null) {
+                            Toast.makeText(getContext(), item,
+                                    Toast.LENGTH_SHORT).show();
+
+                            makeGraph(item, position);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+
+
+
+
+                int stateCount = 0;
                 for (Case cases : caseSet) {
 
-                    //stateNames.add("" + cases.getState());
+                    //visitors.add(new BarEntry(1, 2));
 
                     String content = "";
-
-                    //content += cases.getState() + "\n";
 
                     content += "State: " + cases.getState() + "\n";
                     content += "Positive: " + cases.getPositive() + "\n";
@@ -77,10 +128,16 @@ public class StatisticsFragment extends Fragment {
                     content += "Probable: " + cases.getProbableCases() + "\n";
                     content += "Confirmed Deaths: " + cases.getDeathConfirmed() + "\n\n";
 
-                    textViewResult.append(content);
-
+                    //textViewResult.append(content);
+                    stateCount++;
 
                 }
+
+
+
+
+
+
 
             }
 
@@ -89,6 +146,15 @@ public class StatisticsFragment extends Fragment {
                 textViewResult.setText(t.getMessage());
             }
         });
+
+
+
+
+
+
+
+
+
 
 
         //Spinner spinner = (Spinner) view.findViewById(R.id.state_spinner);
@@ -122,6 +188,44 @@ public class StatisticsFragment extends Fragment {
          */
 
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
+
+    void makeGraph(String name, int pos) {
+        Case thing = caseSet.get(pos);
+        int positive = thing.getPositive();
+        int deaths = thing.getDeathConfirmed();
+        int positiveIncrease = thing.getPositiveIncrease();
+
+        BarChart barChart = getView().findViewById(R.id.bar_chart);
+
+        ArrayList<BarEntry> stats = new ArrayList<>();
+        stats.add(new BarEntry(0, positive));
+        stats.add(new BarEntry(1, deaths));
+        stats.add(new BarEntry(2, positiveIncrease));
+
+        BarDataSet barDataSet = new BarDataSet(stats, "Statistics for " + thing.getState());
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(16f);
+        BarData barData = new BarData(barDataSet);
+
+        if (barChart != null) {
+            barChart.setFitBars(true);
+            barChart.setData(barData);
+            barChart.getDescription().setText("Bar Chart Test");
+            barChart.animateY(2000);
+        }
+        else {
+            Toast.makeText(getContext(), "No reference to barChart.", Toast.LENGTH_LONG).show();
+
+        }
     }
 
 

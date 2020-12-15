@@ -5,19 +5,27 @@
     android:padding="0dp"
     android:background="@android:color/holo_blue_light">
 
-    <Spinner
-        android:id="@+id/state_spinner"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:background="@android:color/white">
+
+        <Spinner
+            android:id="@+id/state_spinner"
+            android:textColor="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
 
         />
+    </FrameLayout>
 
+
+    <!--
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
-
+        android:fillViewport="true"> -->
 
         <TextView
             android:id="@+id/text_view_result"
@@ -27,7 +35,13 @@
             android:textSize="30sp"
             android:layout_centerInParent="true"/>
 
-    </androidx.core.widget.NestedScrollView>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id='@+id/bar_chart'
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--</androidx.core.widget.NestedScrollView> -->
 
 
 </RelativeLayout>
