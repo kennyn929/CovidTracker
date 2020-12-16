@@ -3,6 +3,7 @@ package com.example.covidtracker;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.RestrictionsManager;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +42,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -58,11 +62,14 @@ public class MapFragment extends Fragment
     View view;
     FusedLocationProviderClient mFusedLocationProviderClient;
 
+    Button btnMarker;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getLocationPermission();
+
     }
 
     @Override
@@ -75,6 +82,16 @@ public class MapFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btnMarker = getView().findViewById(R.id.btnMarker);
+        btnMarker.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), AddMarkerActivity.class);
+                startActivity(intent);
+            }
+        });
 
         initMap();
     }
@@ -125,6 +142,7 @@ public class MapFragment extends Fragment
             }
         } else {
             Toast.makeText(getContext(), "Enable your location to make full use of this feature.", Toast.LENGTH_LONG).show();
+            
         }
     }
 

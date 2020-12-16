@@ -23,6 +23,8 @@
             android:value="AIzaSyDeUaxeYh_lQp5-zQqUibAATc273uYRgvc" />
 
         <activity android:name=".HelpProtect"></activity>
+        <activity android:name=".AddMarkerActivity"></activity>
+        <activity android:name=".ViewListContents"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
