@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -200,27 +201,39 @@ public class StatisticsFragment extends Fragment{
     void makeGraph(String name, int pos) {
         Case thing = caseSet.get(pos);
         int positive = thing.getPositive();
+        int recovered = thing.getRecovered();
         int deaths = thing.getDeathConfirmed();
-        int positiveIncrease = thing.getPositiveIncrease();
 
         BarChart barChart = getView().findViewById(R.id.bar_chart);
 
+        ArrayList<String> categories = new ArrayList<String>();
+        categories.add("Positive");
+        categories.add("Recovered");
+        categories.add("Deaths");
+
         ArrayList<BarEntry> stats = new ArrayList<>();
         stats.add(new BarEntry(0, positive));
-        stats.add(new BarEntry(1, deaths));
-        stats.add(new BarEntry(2, positiveIncrease));
+        stats.add(new BarEntry(1, recovered));
+        stats.add(new BarEntry(2, deaths));
 
-        BarDataSet barDataSet = new BarDataSet(stats, "Statistics for " + thing.getState());
+        BarDataSet barDataSet = new BarDataSet(stats, "Statistics for " + name);
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(16f);
+
         BarData barData = new BarData(barDataSet);
 
         if (barChart != null) {
-            barChart.setFitBars(true);
+            barChart.setFitBars(false);
             barChart.setData(barData);
-            barChart.getDescription().setText("Bar Chart Test");
+            barChart.getDescription().setText("");
             barChart.animateY(2000);
+            barChart.getLegend().setEnabled(false);
+            barChart.getAxisRight().setEnabled(false);
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(categories));
+            barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            barChart.getXAxis().setGranularity(1f);
+            barChart.getAxisLeft().setAxisMinimum(0f);
         }
         else {
             Toast.makeText(getContext(), "No reference to barChart.", Toast.LENGTH_LONG).show();

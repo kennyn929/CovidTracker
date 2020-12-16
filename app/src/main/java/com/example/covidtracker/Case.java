@@ -7,6 +7,7 @@ public class Case {
     private int positiveIncrease;
     private int probableCases;
     private int deathConfirmed;
+    private int recovered;
 
     public String getState() {
         return state;
@@ -27,4 +28,6 @@ public class Case {
     public int getDeathConfirmed() {
         return deathConfirmed;
     }
+
+    public int getRecovered() { return recovered; }
 }
