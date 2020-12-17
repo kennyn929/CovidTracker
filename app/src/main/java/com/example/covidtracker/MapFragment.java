@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.RestrictionsManager;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -17,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.StringTokenizer;
+
 public class MapFragment extends Fragment
         implements
         OnMapReadyCallback,
@@ -64,11 +69,15 @@ public class MapFragment extends Fragment
 
     Button btnMarker;
 
+    DatabaseHelper myDB;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getLocationPermission();
+
+        myDB = new DatabaseHelper(getContext());
 
     }
 
@@ -108,6 +117,9 @@ public class MapFragment extends Fragment
         LatLng affectedArea = new LatLng(35.307173, -80.735158);
         googleMap.addMarker(new MarkerOptions().position(affectedArea).title("Affected Area"));
         drawCircle(affectedArea);
+
+        markMap(mGoogleMap);
+
         //CameraPosition affected = CameraPosition.builder().target(new LatLng(40.689247, -74.044502)).zoom(16).bearing(0).tilt(45).build();
 
         //googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
@@ -142,7 +154,7 @@ public class MapFragment extends Fragment
             }
         } else {
             Toast.makeText(getContext(), "Enable your location to make full use of this feature.", Toast.LENGTH_LONG).show();
-            
+
         }
     }
 
@@ -244,6 +256,24 @@ public class MapFragment extends Fragment
     @Override
     public void onMyLocationClick(@NonNull Location location) {
         Toast.makeText(getContext(), "Current location:\n" + location, Toast.LENGTH_LONG).show();
+    }
+
+    private void markMap(GoogleMap mGoogleMap) {
+        Cursor data = myDB.getListContents();
+
+        if(data.getCount() == 0) {
+            //Toast.makeText(getContext(), "There's nothing in the database.", Toast.LENGTH_LONG).show();
+        } else {
+            while(data.moveToNext()) {
+                StringTokenizer st = new StringTokenizer(data.getString(1));
+                float lat = Float.parseFloat(st.nextToken());
+                float lng = Float.parseFloat(st.nextToken());
+
+                LatLng coord = new LatLng(lat, lng);
+
+                mGoogleMap.addMarker(new MarkerOptions().position(coord));
+            }
+        }
     }
 
     private void drawCircle(LatLng point){

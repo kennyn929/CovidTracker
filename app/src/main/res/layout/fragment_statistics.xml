@@ -10,14 +10,17 @@
         android:layout_height="50dp"
         android:background="@android:color/white">
 
+
+
         <Spinner
             android:id="@+id/state_spinner"
-            android:textColor="@android:color/black"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-
+            android:textColor="#FF0000"
         />
+
     </FrameLayout>
 
 

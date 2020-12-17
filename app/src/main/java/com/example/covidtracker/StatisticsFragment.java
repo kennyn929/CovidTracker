@@ -94,6 +94,7 @@ public class StatisticsFragment extends Fragment{
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view,
                                                int position, long id) {
+
                         String item = adapterView.getItemAtPosition(position).toString();
                         if (item != null) {
                             Toast.makeText(getContext(), item,
