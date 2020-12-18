@@ -23,12 +23,13 @@ import com.google.android.gms.tasks.Task;
 public class AddMarkerActivity extends AppCompatActivity {
 
     DatabaseHelper myDB;
-    Button btnAdd, btnView, btnAddCurrentLocation;
+    Button btnAdd, btnView, btnAddCurrentLocation, btnUseMarker;
     EditText editText;
 
     FusedLocationProviderClient mFusedLocationProviderClient;
 
     String coordinates;
+    String userCoord;
 
 
     @Override
@@ -40,7 +41,11 @@ public class AddMarkerActivity extends AppCompatActivity {
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnView = (Button) findViewById(R.id.btnView);
         btnAddCurrentLocation = (Button) findViewById(R.id.btnAddCurrentLocation);
+        btnUseMarker = (Button) findViewById(R.id.btnUsePlacedMarker);
         myDB = new DatabaseHelper(this);
+
+        Intent receivedIntent = getIntent();
+        userCoord = receivedIntent.getStringExtra("userCoord");
 
         getDeviceLocation();
 
@@ -87,6 +92,22 @@ public class AddMarkerActivity extends AppCompatActivity {
                 }
             }
 
+        });
+
+        btnUseMarker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newEntry = userCoord;
+
+                if (coordinates.length() != 0) {
+                    editText.setText(newEntry);
+                    Toast.makeText(AddMarkerActivity.this, userCoord, Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    Toast.makeText(AddMarkerActivity.this, "Need to place a marker on the map!", Toast.LENGTH_LONG).show();
+                }
+            }
         });
 
     }

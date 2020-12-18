@@ -74,6 +74,7 @@ public class MapFragment extends Fragment
     DatabaseHelper myDB;
 
     MarkerOptions userMarker;
+    String userMarkerName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class MapFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), AddMarkerActivity.class);
+                intent.putExtra("userCoord", userMarkerName);
                 startActivity(intent);
             }
         });
@@ -166,9 +168,10 @@ public class MapFragment extends Fragment
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) {
-                userMarker = new MarkerOptions().position(point);
+                userMarker = new MarkerOptions().position(point).title(point.latitude + " " + point.longitude);
                 googleMap.clear();
                 googleMap.addMarker(userMarker);
+                userMarkerName = point.latitude + " " + point.longitude;
                 markMap(googleMap);
 
             }

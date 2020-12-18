@@ -26,10 +26,21 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
         android:layout_below="@+id/btnAdd"
         android:text="Add current location"
         android:id="@+id/btnAddCurrentLocation"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/btnAddCurrentLocation"
+        android:text="User placed marker"
+        android:id="@+id/btnUsePlacedMarker"
         />
 
     <Button
