@@ -21,6 +21,7 @@
         android:id="@+id/editText"
         android:layout_marginTop="100dp"
         android:layout_marginHorizontal="30dp"
+        android:enabled="false"
         />
 
     <Button
@@ -39,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:layout_below="@+id/btnAddCurrentLocation"
-        android:text="User placed marker"
+        android:text="Use placed marker"
         android:id="@+id/btnUsePlacedMarker"
         />
 
@@ -61,6 +62,24 @@
         android:layout_below="@+id/editText"
         android:id="@+id/btnView"
         android:text="View Contents"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnUsePlacedMarker"
+        android:layout_margin="40dp"
+        android:textSize="20dp"
+        android:text="Add a location by selecting either your current location or your placed marker. Then press add."
+        />
+
+    <TextView
+        android:id="@+id/textAddMarker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnUsePlacedMarker"
+        android:layout_margin="40dp"
+        android:textSize="20dp"
         />
 
 

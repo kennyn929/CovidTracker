@@ -14,7 +14,7 @@ public class EditDataActivity extends AppCompatActivity {
 
     private static final String TAG = "EditDataActivity";
 
-    private Button btnSave, btnDelete;
+    private Button btnDelete;
     private EditText editable_item;
 
     DatabaseHelper myDBHelper;
@@ -27,7 +27,6 @@ public class EditDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_layout);
 
-        btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
         editable_item = findViewById(R.id.editable_item);
         myDBHelper = new DatabaseHelper(this);
@@ -40,6 +39,7 @@ public class EditDataActivity extends AppCompatActivity {
 
         editable_item.setText(selectedName);
 
+        /*
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class EditDataActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        });
+        }); */
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
