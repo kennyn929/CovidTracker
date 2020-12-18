@@ -23,7 +23,7 @@ public class HelpFragment extends Fragment {
     ListView listView;
 
     // Help Menu
-    String items[] = new String[] { "What can I do to protect myself?"};
+    String items[] = new String[] { "What can I do to protect myself?", "Why do I need to enable my device location?"};
 
     @Nullable
     @Override
@@ -43,6 +43,10 @@ public class HelpFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     Intent intent = new Intent(view.getContext(), HelpProtect.class);
+                    startActivity(intent);
+                }
+                else if (position == 1) {
+                    Intent intent = new Intent(view.getContext(), HelpPermission.class);
                     startActivity(intent);
                 }
 
