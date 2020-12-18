@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
         String instructions = "Welcome to COVID Tracker\n\n" +
                 "To see where local outbreaks are located, tap on the 'Map' tab\n\n" +
                 "To access latest statistics of COVID cases, tap on the 'Stats' tab\n\n" +
-                "Visit the 'Mark Self' tab if you believe you are infected\n\n" +
+                "Visit the 'Survey' tab if you believe you are infected\n\n" +
                 "For common questions on COVID, tap on the 'Help' tab";
         textview.setText(instructions);
     }

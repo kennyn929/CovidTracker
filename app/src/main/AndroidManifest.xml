@@ -26,6 +26,8 @@
         <activity android:name=".AddMarkerActivity"></activity>
         <activity android:name=".ViewListContents"></activity>
         <activity android:name=".EditDataActivity"></activity>
+        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".QuizEndActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
