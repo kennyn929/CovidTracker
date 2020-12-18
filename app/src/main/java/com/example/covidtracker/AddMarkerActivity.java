@@ -49,7 +49,16 @@ public class AddMarkerActivity extends AppCompatActivity {
         instructions.setText("Add a location by selecting either your current location or your placed marker. Then press add.\n\nSelect \"View Contents\" to see your current list of marked areas");
 
         Intent receivedIntent = getIntent();
-        userCoord = receivedIntent.getStringExtra("userCoord");
+        if (receivedIntent.getStringExtra("userCoord") != null) {
+            userCoord = receivedIntent.getStringExtra("userCoord");
+        }
+        else {
+            btnUseMarker.setEnabled(false);
+            Toast.makeText(AddMarkerActivity.this, "Place a marker on a map to use its location.", Toast.LENGTH_SHORT).show();
+        }
+
+
+
 
         getDeviceLocation();
 
@@ -104,7 +113,7 @@ public class AddMarkerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String newEntry = userCoord;
 
-                if (coordinates.length() != 0) {
+                if (newEntry.length() != 0) {
                     editText.setText(newEntry);
                     //Toast.makeText(AddMarkerActivity.this, userCoord, Toast.LENGTH_LONG).show();
 
@@ -140,7 +149,15 @@ public class AddMarkerActivity extends AppCompatActivity {
                         //Toast.makeText(AddMarkerActivity.this, "location found.", Toast.LENGTH_SHORT).show();
                         Location currentLocation = (Location) task.getResult();
 
-                        coordinates = currentLocation.getLatitude() + " " + currentLocation.getLongitude();
+                        if (currentLocation != null){
+                            coordinates = currentLocation.getLatitude() + " " + currentLocation.getLongitude();
+                        }
+                        else {
+                            Toast.makeText(AddMarkerActivity.this, "Enable your location to be able to use your current location.", Toast.LENGTH_SHORT).show();
+                            btnAddCurrentLocation.setEnabled(false);
+                        }
+
+
 
                     } else {
                         //Toast.makeText(AddMarkerActivity.this, "unable to get location", Toast.LENGTH_SHORT).show();
