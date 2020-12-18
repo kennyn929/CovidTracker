@@ -43,12 +43,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class MapFragment extends Fragment
@@ -71,6 +73,8 @@ public class MapFragment extends Fragment
 
     DatabaseHelper myDB;
 
+    MarkerOptions userMarker;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,8 @@ public class MapFragment extends Fragment
         getLocationPermission();
 
         myDB = new DatabaseHelper(getContext());
+
+        userMarker = null;
 
     }
 
@@ -114,9 +120,9 @@ public class MapFragment extends Fragment
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        LatLng affectedArea = new LatLng(35.307173, -80.735158);
-        googleMap.addMarker(new MarkerOptions().position(affectedArea).title("Affected Area"));
-        drawCircle(affectedArea);
+        //LatLng affectedArea = new LatLng(35.307173, -80.735158);
+        //googleMap.addMarker(new MarkerOptions().position(affectedArea).title("Affected Area"));
+        //drawCircle(affectedArea);
 
         markMap(mGoogleMap);
 
@@ -156,6 +162,19 @@ public class MapFragment extends Fragment
             Toast.makeText(getContext(), "Enable your location to make full use of this feature.", Toast.LENGTH_LONG).show();
 
         }
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                userMarker = new MarkerOptions().position(point);
+                googleMap.clear();
+                googleMap.addMarker(userMarker);
+                markMap(googleMap);
+
+            }
+        });
+
+
     }
 
     private void getLocationPermission() {
@@ -271,7 +290,8 @@ public class MapFragment extends Fragment
 
                 LatLng coord = new LatLng(lat, lng);
 
-                mGoogleMap.addMarker(new MarkerOptions().position(coord));
+                mGoogleMap.addMarker(new MarkerOptions().position(coord).title(lat + " " + lng));
+                drawCircle(coord);
             }
         }
     }
@@ -300,6 +320,5 @@ public class MapFragment extends Fragment
         mGoogleMap.addCircle(circleOptions);
 
     }
-
 
 }
