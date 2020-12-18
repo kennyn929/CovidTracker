@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/quizQuestion"
-        android:layout_width="306dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:text="TextView"

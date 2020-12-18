@@ -3,7 +3,17 @@ package com.example.covidtracker;
 public class QuestionLibrary {
     private String mQuestions [] = {
             "In the past 14 days, have you: ",
-            "Do you have any of these symptoms? How many do you share? "
+            "Do you have any of these symptoms? How many do you share? \n" +
+                    "- Fever or Chills \n" +
+                    "- Cough \n" +
+                    "- Shortness of breath of difficulty breathing \n" +
+                    "- Fatigue \n" +
+                    "- Muscle or body aches \n" +
+                    "- Headache \n" +
+                    "- New loss of taste or smell \n" +
+                    "- Sore throat \n" +
+                    "- Congestion or runny nose \n" +
+                    "- Nausea, vomiting or diarrhea"
     };
 
     private String mChoices [][] = {
