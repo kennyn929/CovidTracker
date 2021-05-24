@@ -20,7 +20,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDeUaxeYh_lQp5-zQqUibAATc273uYRgvc" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity android:name=".HelpProtect"></activity>
         <activity android:name=".HelpPermission"></activity>
